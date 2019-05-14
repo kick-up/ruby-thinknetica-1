@@ -27,7 +27,7 @@ c = gets.to_f
 cathetus1, cathetus2, hypotenuse = [a, b, c].sort!
 right_triangle = cathetus1**2 + cathetus2**2 == hypotenuse**2
 
-if right_triangle && cathetus1**2 + cathetus2**2
+if right_triangle && cathetus1**2 == cathetus2**2
   puts "Этот треугольник является прямоугольным и равнобедренным"
 elsif right_triangle
   puts "Этот треугольник является прямоугольным"
