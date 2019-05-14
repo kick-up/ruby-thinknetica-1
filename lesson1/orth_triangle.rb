@@ -25,13 +25,13 @@ puts "Сторона C"
 c = gets.to_f
 
 cathetus1, cathetus2, hypotenuse = [a, b, c].sort!
+right_triangle = cathetus1**2 + cathetus2**2 == hypotenuse**2
 
-if right_triangle = cathetus1**2 + cathetus2**2 == hypotenuse**2
+if right_triangle && cathetus1**2 + cathetus2**2
+  puts "Этот треугольник является прямоугольным и равнобедренным"
+elsif right_triangle
   puts "Этот треугольник является прямоугольным"
-    if cathetus1 == cathetus2
-      puts "Треугольник является равнобедренным"
-    end
-elsif cathetus1 == cathetus2 && cathetus1 == hypotenuse
+elsif cathetus1 == hypotenuse
   puts "Треугольник не является прямоугольным. Треугольник является равнобедренным и равносторонним"
 else
   puts "Этот треугольник не является прямоугольным"
