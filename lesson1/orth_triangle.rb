@@ -16,41 +16,23 @@
 puts "Укажите размеры трех сторон треугольника: "
 
 puts "Сторона A"
-a = gets.chomp.to_f
+a = gets.to_f
 
 puts "Сторона B"
-b = gets.chomp.to_f
+b = gets.to_f
 
 puts "Сторона C"
-c = gets.chomp.to_f
+c = gets.to_f
 
-if a > b && a > c
-  if a == Math.sqrt(b**2 + c**2)
-    puts "Этот треугольник является прямоугольным"
-    if b == c
+cathetus1, cathetus2, hypotenuse = [a, b, c].sort!
+
+if right_triangle = cathetus1**2 + cathetus2**2 == hypotenuse**2
+  puts "Этот треугольник является прямоугольным"
+    if cathetus1 == cathetus2
       puts "Треугольник является равнобедренным"
     end
-  else
-    puts "Этот треугольник не является прямоугольным"
-  end
-elsif b > a && b > c
-  if b == Math.sqrt(a**2 + c**2)
-    puts "Этот треугольник является прямоугольным"
-    if a == c
-      puts "Треугольник является равнобедренным"
-    end
-  else
-    puts "Этот треугольник не является прямоугольным"
-  end
-elsif c > a && c > b
-  if c == Math.sqrt(a**2 + b**2)
-    puts "Этот треугольник является прямоугольным"
-    if a == b
-      puts "Треугольник является равнобедренным"
-    end
-  else
-    puts "Этот треугольник не является прямоугольным"
-  end
-elsif a == b && a == c && b == c
+elsif cathetus1 == cathetus2 && cathetus1 == hypotenuse
   puts "Треугольник не является прямоугольным. Треугольник является равнобедренным и равносторонним"
+else
+  puts "Этот треугольник не является прямоугольным"
 end

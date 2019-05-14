@@ -7,10 +7,10 @@
 WEIGHT_COEFICIENT = 110 #coeficient
 
 puts "Your name: "
-name = gets.chomp.to_s.capitalize
+name = gets.chomp.capitalize
 
 puts "Your height in centimeters (integers only): "
-height = Integer(gets.chomp)
+height = gets.to_i
 
 perfect_weight = height - WEIGHT_COEFICIENT
 
@@ -19,5 +19,3 @@ if perfect_weight < 0
 else
   puts "#{name}, your perfect weight is #{perfect_weight} kg."
 end
-
-new_hash = Hash.new

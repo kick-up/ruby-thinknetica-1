@@ -16,24 +16,25 @@
 puts "Укажите три коэффицента: "
 
 puts "A"
-a = gets.chomp.to_f
+a = gets.to_f
 
 puts "B"
-b = gets.chomp.to_f
+b = gets.to_f
 
 puts "C"
-c = gets.chomp.to_f
+c = gets.to_f
 
-determinant = b**2 - 4*a*c
+determinant = b**2 - 4 * a * c
 puts "Дискриминант равен #{determinant}"
 
 if determinant > 0
-  x1 = (Math.sqrt(determinant) - b)/2*a
+  sqrt = Math.sqrt(determinant)
+  x1 = (-b + sqrt) / (2.0 * a)
   puts "Корень Х1 равен #{x1.round(2)}"
-  x2 = (-Math.sqrt(determinant) - b)/2*a
+  x2 = (-b - sqrt) / (2.0 * a)
   puts "Корень Х2 равен #{x2.round(2)}"
 elsif determinant == 0
-  x1 = -b/2*a
+  x1 = -b / (2.0 * a)
   puts "Корень Х1 = Х2 = #{x1.round(2)}"
 else
   puts "Корней нет!"
