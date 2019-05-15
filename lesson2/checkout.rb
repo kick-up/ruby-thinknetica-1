@@ -11,42 +11,26 @@
 
 @basket = Hash.new
 
-# @run = true <<< сначала сделал через выключатель, но потом подумал, что коль в лекции рекомендуют
-# loop do, то лучше применить его.
-
 @total = 0
 
 def shopping_cart
-  # while @run
-  #   puts "Введите название товара:"
-  #   item = gets.chomp.to_s
-  #   if item == "stop"
-  #     @run = false
-  #   else
-  #     puts "Укажите количество товара:"
-  #     quantity = gets.chomp.to_i
-  #     puts "Укажите цену товара:"
-  #     price = gets.chomp.to_f
-  #     basket[item] = [price, quantity]
-  #   end
-  # end
   loop do
     puts "Введите название товара. Для завершения покупок, введите stop."
-    item = gets.chomp.to_s
-    break if item == "stop"
+    item = gets.chomp
+    break if item.downcase == "stop"
     puts "Укажите количество товара:"
     quantity = gets.to_i
     puts "Укажите цену товара:"
     price = gets.to_f
-    @basket[item] = [price, quantity]
+    @basket[item] = {price: price, quantity: quantity}
   end
 end
 
 def print_basket
   puts @basket
   @basket.each do |k, v|
-    total_per_item = v[0] * v[1]
-    puts "Итоговая сумма за #{v[1]} единиц(ы) товара #{k}: #{total_per_item} зимбабвийских долларов"
+    total_per_item = v[:price] * v[:quantity]
+    puts "Итоговая сумма за #{v[:quantity]} единиц(ы) товара #{k}: #{total_per_item} зимбабвийских долларов"
     @total += total_per_item
   end
   puts "К оплате итого: #{@total} зимбабвийских долларов"

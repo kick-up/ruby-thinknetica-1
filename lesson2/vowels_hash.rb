@@ -3,16 +3,12 @@
 
 alphabet = ("a".."z")
 
-count = (1..26)
+vowels = %w[a e i o u]
 
-vowels = ["a", "e", "i", "o", "u"]
+vowels_hash = Hash.new(0)
 
-vowels_hash = Hash.new
-
-alphabet.zip(count).each do |x, y|
-  if vowels.include?(x)
-    vowels_hash[x] = y
-  end
+alphabet.each.with_index(1) do |letter, index|
+  vowels_hash[letter] = index if vowels.include?(letter)
 end
 
 puts vowels_hash

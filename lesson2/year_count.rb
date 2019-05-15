@@ -17,9 +17,7 @@
 # Таким образом, 2000 г. является особым високосным годом,
 # который бывает лишь раз в 400 лет.
 
-month_days_reg = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
-month_days_leap = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+month_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
@@ -32,20 +30,21 @@ month = gets.to_i
 puts "Year"
 year = gets.to_i
 
-count = day
+count = [day]
 
 puts "Lets go!"
 
 if year % 4 == 0 && year % 100 != 1 || year % 400 == 0
-  months.zip(month_days_leap).each do |x, y|
-    count += y
+  month_days[1] = 29
+  months.zip(month_days).each do |x, y|
+    count << y
     break if x == month - 1
   end
 else
-  months.zip(month_days_reg).each do |x, y|
-    count += y
+  months.zip(month_days).each do |x, y|
+    count << y
     break if x == month - 1
   end
 end
 
-puts count
+puts count.reduce(:+)

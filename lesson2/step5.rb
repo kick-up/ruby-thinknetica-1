@@ -1,11 +1,13 @@
 # Заполнить массив числами от 10 до 100 с шагом 5
 
-step = []
+# numbers = []
+# number = 10
 
-(10..100).each do |x|
-  if x % 5 == 0
-    step << x
-  end
-end
+# while number <= 100
+#   numbers << number
+#   number += 5
+# end
 
-print step
+# puts numbers
+
+puts (10..100).step(5).to_a  # <<< круто!

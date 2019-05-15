@@ -1,14 +1,13 @@
 # Заполнить массив числами фибоначчи до 100
 
-def fib(n)
-  fibo = [0, 1]
-  i = 0
-  while i < n
-    puts fibo[i]
-    fibo_next = fibo[i] + fibo[i.next]
-    fibo << fibo_next
-    i += 1
-  end
+fibo = [0, 1]
+i = 0
+
+loop do
+  fibo_next = fibo[i] + fibo[i.next]
+  break if fibo_next >= 100
+  fibo << fibo_next
+  i += 1
 end
 
-fib(100)
+puts fibo
