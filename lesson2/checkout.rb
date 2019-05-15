@@ -16,7 +16,7 @@
 
 @total = 0
 
-def checkout
+def shopping_cart
   # while @run
   #   puts "Введите название товара:"
   #   item = gets.chomp.to_s
@@ -52,5 +52,5 @@ def print_basket
   puts "К оплате итого: #{@total} зимбабвийских долларов"
 end
 
-checkout
+shopping_cart
 print_basket
