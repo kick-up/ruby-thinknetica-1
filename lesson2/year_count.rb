@@ -19,8 +19,6 @@
 
 month_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-
 puts "Day"
 day = gets.to_i
 
@@ -30,21 +28,15 @@ month = gets.to_i
 puts "Year"
 year = gets.to_i
 
-count = [day]
+count = []
 
 puts "Lets go!"
 
 if year % 4 == 0 && year % 100 != 1 || year % 400 == 0
   month_days[1] = 29
-  months.zip(month_days).each do |x, y|
-    count << y
-    break if x == month - 1
-  end
+  count << month_days.take(month - 1)
 else
-  months.zip(month_days).each do |x, y|
-    count << y
-    break if x == month - 1
-  end
+  count << month_days.take(month - 1)
 end
 
-puts count.reduce(:+)
+puts count.flatten.reduce(day, :+)

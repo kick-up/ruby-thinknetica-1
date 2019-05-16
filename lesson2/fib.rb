@@ -1,13 +1,9 @@
 # Заполнить массив числами фибоначчи до 100
 
-fibo = [0, 1]
-i = 0
+fibbonacci = [0, 1]
+next_element = 1
 
-loop do
-  fibo_next = fibo[i] + fibo[i.next]
-  break if fibo_next >= 100
-  fibo << fibo_next
-  i += 1
+while next_element < 100
+  fibbonacci << next_element
+  next_element = fibbonacci[-1] + fibbonacci[-2]
 end
-
-puts fibo

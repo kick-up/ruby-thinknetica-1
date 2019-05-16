@@ -18,9 +18,7 @@ months = {
 
 def select_with_days_count(months, count)
   months.each do |month, days|
-    if days == count
-      puts month
-    end
+    puts month if days == count
   end
 end
 
