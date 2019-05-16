@@ -28,12 +28,10 @@ month = gets.to_i
 puts "Year"
 year = gets.to_i
 
-count = []
-
 puts "Lets go!"
 
 if year % 4 == 0 && year % 100 != 0 || year % 400 == 0
   month_days[1] = 29
 end
 
-puts count = month_days.take(month - 1).reduce(day, :+)
+puts month_days.take(month - 1).reduce(day, :+)
