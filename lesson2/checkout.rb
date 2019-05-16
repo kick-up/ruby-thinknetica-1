@@ -29,8 +29,8 @@ end
 def print_basket
   puts @basket
   @basket.each do |name, info|
-    total_per_item = v[:price] * v[:quantity]
-    puts "Итоговая сумма за #{v[:quantity]} единиц(ы) товара #{k}: #{total_per_item} зимбабвийских долларов"
+    total_per_item = info[:price] * info[:quantity]
+    puts "Итоговая сумма за #{info[:quantity]} единиц(ы) товара #{name}: #{total_per_item} зимбабвийских долларов"
     @total += total_per_item
   end
   puts "К оплате итого: #{@total} зимбабвийских долларов"
