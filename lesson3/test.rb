@@ -15,6 +15,7 @@ p initial_route.add_transit_station(karaganda)
 p initial_route.stations
 
 p hogwarts = Train.new("Hogwarts", "Passenger", 1)
+p siberian = Train.new("Siberian", "Cargo", 1)
 hogwarts.increase_speed(10)
 p hogwarts
 hogwarts.decrease_speed(8)
@@ -33,6 +34,7 @@ p hogwarts.detach_carriage
 p hogwarts
 puts "___________________"
 p hogwarts.accept_route(initial_route)
+p siberian.accept_route(initial_route)
 puts "___________________"
 p hogwarts.current_station
 puts "___________________"
@@ -51,14 +53,17 @@ p hogwarts.move_forward
 puts "___________________"
 p hogwarts.current_station
 p hogwarts.move_forward
-puts "___________________!!!!"
+puts "___________________"
+p hogwarts.current_station
+p hogwarts.move_backward
+p hogwarts.current_station
+p hogwarts.move_backward
+p hogwarts.current_station
+p hogwarts.move_backward
 p hogwarts.current_station
 p hogwarts.move_backward
 p hogwarts.current_station
 puts "___________________!!!!"
-p hogwarts.move_backward
-p hogwarts.current_station
-p hogwarts.move_backward
-p hogwarts.current_station
-p hogwarts.move_backward
-p hogwarts.current_station
+puts almaty_station.train_types("Passenger")
+puts "___________________!!!!"
+puts almaty_station.train_types("Cargo")

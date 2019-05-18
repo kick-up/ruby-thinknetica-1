@@ -13,14 +13,12 @@ class Station
   end
 
   def train_out(train)
-    if @trains.length > 0
-      @trains.delete(train)
-    end
+    @trains.delete(train)
   end
 
   def train_types(type)
-    @trains.select do |x|
-      x = type
+    @trains.select do |train|
+      train.type == type
     end
   end
 end
