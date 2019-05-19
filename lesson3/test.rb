@@ -15,6 +15,7 @@ p initial_route.add_transit_station(karaganda)
 p initial_route.stations
 
 p hogwarts = Train.new("Hogwarts", "Passenger", 1)
+p talgo = Train.new("Talgo", "Passenger", 1)
 p siberian = Train.new("Siberian", "Cargo", 1)
 hogwarts.increase_speed(10)
 p hogwarts
@@ -35,6 +36,7 @@ p hogwarts
 puts "___________________"
 p hogwarts.accept_route(initial_route)
 p siberian.accept_route(initial_route)
+p talgo.accept_route(initial_route)
 puts "___________________"
 p hogwarts.current_station
 puts "___________________"

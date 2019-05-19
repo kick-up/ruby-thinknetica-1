@@ -2,8 +2,7 @@ require_relative("route")
 require_relative("station")
 
 class Train
-  attr_accessor :speed, :type, :number
-  attr_reader :carriages_count, :route
+  attr_reader :carriages_count, :route, :speed, :type, :number
   def initialize(number, type, carriages_count)
     @number = number
     @type = type
@@ -47,13 +46,13 @@ class Train
   end
 
   def next_station
-    @route.stations[@current_station_index+1]
+    @route.stations[@current_station_index + 1]
   end
 
   def previous_station
     return unless @current_station_index.positive?
 
-    @route.stations[@current_station_index-1]
+    @route.stations[@current_station_index - 1]
   end
 
   def move_forward
