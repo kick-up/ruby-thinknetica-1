@@ -18,4 +18,8 @@ class Route
   def stations
     [@origin, *@transit_stations, @destination]
   end
+
+  def to_s
+    [stations.first, *[@transit_stations], stations.last].join(' - ')
+  end
 end

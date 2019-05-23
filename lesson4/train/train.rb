@@ -1,5 +1,6 @@
 
 class Train
+  attr_writer :carriages
   attr_reader :carriages, :route, :speed, :type, :number
   def initialize(number)
     @number = number
@@ -21,14 +22,15 @@ class Train
 
   def attach_carriage(carriage)
     return unless @speed.zero?
+    return unless attachable_carriage?(carriage)
 
-    @carriages << carriage if @type == carriage.type
+    @carriages << carriage
   end
 
   def detach_carriage(carriage)
     return unless @speed.zero?
 
-    @carriages.delete_at(-1) if @type == carriage.type
+    @carriages.delete_at(-1)
   end
 
   def accept_route(route)
@@ -65,5 +67,9 @@ class Train
     current_station.train_out(self)
     @current_station_index -= 1
     current_station.train_in(self)
+  end
+
+  def to_s
+    [number, type].join(" - ")
   end
 end

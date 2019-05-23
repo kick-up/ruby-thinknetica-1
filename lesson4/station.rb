@@ -5,7 +5,7 @@ class Station
     @name = name
     @trains = []
   end
-  
+
   def train_in(train)
     @trains << train
   end
@@ -18,5 +18,9 @@ class Station
     @trains.select do |train|
       train.type == type
     end
+  end
+
+  def to_s
+    name
   end
 end

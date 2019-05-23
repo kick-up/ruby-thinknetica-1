@@ -1,140 +1,198 @@
-require_relative("train")
 require_relative("route")
 require_relative("station")
-require_relative("carriage")
-require_relative("cargo_train")
-require_relative("passenger_train")
+require "./carriage/carriage"
+require "./carriage/cargo_carriage"
+require "./carriage/passenger_carriage"
+require "./train/train"
+require "./train/cargo_train"
+require "./train/passenger_train"
 
-class Terminal
+class Main
   def initialize
-    @station_list = []
-    @train_list = []
-    @route_list = []
+    @stations = []
+    @trains = []
+    @routes = []
+    # @transit_stations = []
   end
+
+  def menu
+    puts "Панель управления железно-дорожной станцией. Выберите действие указав соответсвующий номер:"
+    puts "1. Создать станцию"
+    puts "2. Создать поезд"
+    puts "3. Создание маршрута маршрутами"
+    puts "4. Назначение маршрута поезду"
+    puts "5. Прицепить вагон"
+    puts "6. Отцепить вагон"
+    puts "7. Управление поездом"
+    puts "8. Список станций и поездов на станции"
+    puts "9. Управление маршрутами"
+  end
+
+  def create_station
+    puts "Введите название станции:"
+    new_station = gets.chomp
+    @stations << Station.new(new_station)
+    puts "Вы добавили станцию #{new_station}"
+  end
+
+  def create_train
+    puts "Выберите тип поезда. Укажите 1 для пассажирского и 2 для грузового(для выхода, введите stop):"
+    user_train_choice = gets.chomp
+    case user_train_choice
+    when "1"
+      puts "Укажите номер поезда:"
+      train_number = gets.chomp.to_s
+      @trains << PassengerTrain.new(train_number)
+    when "2"
+      puts "Укажите номер поезда:"
+      train_number = gets.chomp.to_s
+      @trains << CargoTrain.new(train_number)
+    end
+  end
+
+  def create_route
+    puts "Укажите начальную станцию, выбрав индекс из списка"
+    show_collection(@stations)
+    origin_station = gets.chomp.to_i
+
+    puts "Укажите конечную станцию, выбрав из списка"
+    show_collection(@stations)
+    destination_station = gets.chomp.to_i
+
+    @routes << Route.new(@stations[origin_station - 1], @stations[destination_station - 1])
+  end
+
+  def route_manager
+    puts "Для добавления транзитной станции, нажмите 1. Для удаления - 2."
+    transit_manager = gets.chomp.to_s
+    case transit_manager
+    when "1"
+      puts "Выберите маршрут из списка, указав индекс"
+      show_collection(@routes)
+      route = gets.chomp.to_i
+      puts "Выберите следующую транзитную станцию:"
+      show_collection(@stations)
+      transit_station = gets.chomp.to_i
+      @routes[route - 1].add_transit_station(@stations[transit_station - 1])
+    when "2"
+      puts "Выберите маршрут из списка, указав индекс"
+      show_collection(@routes)
+      route = gets.chomp.to_i
+      puts "Выберите транзитную станцию для удаления:"
+      show_collection(@stations)
+      transit_station = gets.chomp.to_i
+      @routes[route - 1].delete_transit_station(@stations[transit_station - 1])
+    end
+  end
+
+  def assign_route
+    puts "Выберите поезд из списка, указав индекс"
+    show_collection(@trains)
+    train = gets.chomp.to_i
+
+    puts "Выберите маршрут из списка, указав индекс"
+    show_collection(@routes)
+    route = gets.chomp.to_i
+
+    @trains[train - 1].accept_route(@routes[route-1])
+  end
+
+  def attach_carriage_controller
+    puts "Чтобы прицепить вагон к поезду, укажите индекс поезда"
+    show_collection(@trains)
+    train = gets.chomp.to_i
+    puts "Выберите тип вагона: 1 - Passenger или 2 - Cargo"
+    carriage = gets.chomp.to_s
+    case carriage
+    when "1"
+      @trains[train - 1].attach_carriage(PassengerCarriage.new)
+    when "2"
+      @trains[train - 1].attach_carriage(CargoCarriage.new)
+    end
+    p @trains
+  end
+
+  def detach_carriage_controller
+    puts "Чтобы отцепить вагон от поезда, укажите индекс поезда"
+    show_collection(@trains)
+    train = gets.chomp.to_i
+    puts "Выберите вагон, который хотите отцепить"
+    show_collection(@trains[train - 1].carriages)
+    carriage = gets.chomp.to_i
+    @trains[train - 1].detach_carriage(@trains[train - 1].carriages[carriage - 1])
+  end
+
+  def train_controller
+    puts "Чтобы управлять поездом, укажите индекс поезда"
+    show_collection(@trains)
+    train = gets.chomp.to_i
+    puts "Выберите направление движения: 1 - вперед, 2 - назад"
+    direction = gets.chomp.to_i
+    case direction
+    when "1"
+      @trains[train - 1].move_forward
+    when "2"
+      @trains[train - 1].move_backward
+    end
+    puts "Текущая станция: #{@trains[train - 1].current_station}"
+  end
+
+  def show_assets
+    puts "Список станций:"
+    show_collection(@stations)
+    puts "Список поездов:"
+    show_collection(@trains)
+  end
+
+  def show_collection(collection)
+    collection.each.with_index(1) do |item, index|
+      puts "#{index} - #{item}"
+    end
+  end
+
+  # def select_from_collection(collection)
+  #   index = gets.to_i - 1
+  #   return unless index.positive?
+  #   collection[index]
+  # end
+
 
   def run
     loop do
-      # Выбор вариантов:
-      puts "Панель управления железно-дорожной станцией. Выберите действие указав соответсвующий номер:"
-      puts "1. Создать станцию"
-      puts "2. Создать поезд"
-      puts "3. Управление маршрутами"
-      puts "4. Назначение маршрута поезду"
-      puts "5. Прицепить вагон"
-      puts "6. Отцепить вагон"
-      puts "7. Управление поездом"
-      puts "8. Список станций и поездов на станции"
-
+      menu
       choice = gets.chomp
-
       case choice
-      when "1" # Создать станцию
-        puts "Введите название станции:"
-        new_station = gets.chomp
-        @station_list << Station.new(new_station)
-        puts "Вы добавили станцию #{new_station}"
+      when "1"
+        create_station
 
-      when "2" # Создать поезд
-        puts "Выберите тип поезда. Укажите 1 для пассажирского и 2 для грузового(для выхода, введите stop):"
-        user_train_choice = gets.chomp
-        if user_train_choice == "1"
-          puts "Укажите номер поезда:"
-          train_number = gets.chomp.to_s
-          @train_list << PassengerTrain.new(train_number)
-        elsif user_train_choice == "2"
-          puts "Укажите номер поезда:"
-          train_number = gets.chomp.to_s
-          @train_list << CargoTrain.new(train_number)
-        else
-          puts "К сожалению, такой тип отсутствует. Попробуйте еще раз"
-        end
+      when "2"
+        create_train
 
-      when "3" # Маршрут
-        puts "Укажите начальную станцию, выбрав индекс из списка"
-        @station_list.each_with_index do |object, index|
-          p "#{object.name} с индексом #{index}"
-        end
-        origin_station = gets.chomp.to_i
+      when "3"
+        create_route
 
-        puts "Укажите конечную станцию, выбрав из списка"
-        @station_list.each_with_index do |object, index|
-          puts "#{object.name} с индексом #{index}"
-        end
-        destination_station = gets.chomp.to_i
+      when "4"
+        assign_route
 
-        @route_list << Route.new(@station_list[origin_station], @station_list[destination_station])
+      when "5"
+        attach_carriage_controller
 
-      when "4" # Назначение маршрута поезду
-        puts "Выберите поезд из списка, указав индекс"
-        @train_list.each_with_index do |object, index|
-          puts "Номер поезда: #{object.number} с индексом #{index}"
-        end
-        train = gets.chomp.to_i
+      when "6"
+        detach_carriage_controller
 
-        puts "Выберите маршрут из списка, указав индекс"
-        @route_list.each_with_index do |object, index|
-          puts "#{object} с индексом #{index}"
-        end
-        route = gets.chomp.to_i
-
-        @train_list[train].accept_route(@route_list[route])
-
-      when "5" # Прицепить вагон
-        puts "Чтобы прицепить вагон к поезду, укажите индекс поезда"
-        @train_list.each_with_index do |object, index|
-          puts "Номер поезда: #{object.number} с индексом #{index}"
-        end
-        train = gets.chomp.to_i
-        puts "Выберите тип вагона: Passenger или Cargo"
-        carriage = gets.chomp.to_s
-        @train_list[train].attach_carriage(Carriage.new(carriage))
-
-      when "6" # Отцепить вагон
-        puts "Чтобы отцепить вагон от поезда, укажите индекс поезда"
-        @train_list.each_with_index do |object, index|
-          puts "Номер поезда: #{object.number} с индексом #{index}"
-        end
-        train = gets.chomp.to_i
-        puts "Выберите вагон, который хотите отцепить"
-        @train_list[train].carriages.each_with_index do |carriage, index|
-          puts "#{carriage} с индексом #{index}"
-        end
-        carriage = gets.chomp.to_i
-        @train_list[train].detach_carriage(@train_list[train].carriages[carriage])
-
-      when "7" # Вперед - назад
-        puts "Чтобы управлять поездом, укажите индекс поезда"
-        @train_list.each_with_index do |object, index|
-          puts "Номер поезда: #{object.number} с индексом #{index}"
-        end
-        train = gets.chomp.to_i 
-        puts "Выберите направление движения: 1 - вперед, 2 - назад"
-        direction = gets.chomp.to_i
-        if direction == 1
-          @train_list[train].move_forward
-          puts "Предыдущая станция: #{@train_list[train].previous_station}"
-          puts "Текущая станция: #{@train_list[train].current_station}"
-          puts "Следующая станция: #{@train_list[train].next_station}"
-        elsif direction == 2
-          @train_list[train].move_backward
-        else
-          puts "Действие неизвестно"
-        end
+      when "7"
+        train_controller
 
       when "8"
-        puts "Список станций:"
-        @station_list.each do |station|
-          puts station.name
-        end
-        puts "Список поездов:"
-        @train_list.each do |train|
-          puts train.number
-        end
-    end
+        show_assets
+
+      when "9"
+        route_manager
+      end
       break if choice == "stop"
     end
   end
 end
 
-new_session = Terminal.new
+new_session = Main.new
 new_session.run

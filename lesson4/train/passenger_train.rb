@@ -3,4 +3,8 @@ class PassengerTrain < Train
     @type = "Passenger"
     super
   end
+
+  def attachable_carriage?(carriage)
+    carriage.is_a?(PassengerCarriage)
+  end
 end
