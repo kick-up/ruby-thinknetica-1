@@ -16,7 +16,15 @@ class Main
 
   TRAIN_TYPES = [PassengerTrain, CargoTrain]
 
+  def print_state
+    system("clear")
+    puts "---------------------"
+    show_assets
+    puts "---------------------"
+  end
+
   def menu
+    print_state
     puts "Панель управления железно-дорожной станцией. Выберите действие указав соответсвующий номер:"
     puts "1. Создать станцию"
     puts "2. Создать поезд"
@@ -26,7 +34,8 @@ class Main
     puts "6. Отцепить вагон"
     puts "7. Управление поездом"
     puts "8. Список станций и поездов на станции"
-    puts "9. Управление маршрутами"
+    puts "9. Добавить станцию в маршрутный лист"
+    puts "10. Удалить станцию из маршрутного листа"
     puts "0. Выйти из программы"
   end
 
@@ -61,27 +70,47 @@ class Main
     @routes << Route.new(origin_station, destination_station)
   end
 
-  def route_manager
-    puts "Для добавления транзитной станции, нажмите 1. Для удаления - 2."
-    transit_manager = gets.to_i
-    case transit_manager
-    when 1
-      puts "Выберите маршрут из списка, указав индекс"
-      show_collection(@routes)
-      route = select_from_collection(@routes)
-      puts "Выберите следующую транзитную станцию:"
-      show_collection(@stations)
-      transit_station = select_from_collection(@stations)
-      route.add_transit_station(transit_station)
-    when 2
-      puts "Выберите маршрут из списка, указав индекс"
-      show_collection(@routes)
-      route = select_from_collection(@routes)
-      puts "Выберите транзитную станцию для удаления:"
-      show_collection(route.stations)
-      transit_station = select_from_collection(route.stations)
-      route.delete_transit_station(transit_station)
-    end
+  # def route_manager
+  #   puts "Для добавления транзитной станции, нажмите 1. Для удаления - 2."
+  #   transit_manager = gets.to_i
+  #   case transit_manager
+  #   when 1
+  #     puts "Выберите маршрут из списка, указав индекс"
+  #     show_collection(@routes)
+  #     route = select_from_collection(@routes)
+  #     puts "Выберите следующую транзитную станцию:"
+  #     show_collection(@stations)
+  #     transit_station = select_from_collection(@stations)
+  #     route.add_transit_station(transit_station)
+  #   when 2
+  #     puts "Выберите маршрут из списка, указав индекс"
+  #     show_collection(@routes)
+  #     route = select_from_collection(@routes)
+  #     puts "Выберите транзитную станцию для удаления:"
+  #     show_collection(route.stations)
+  #     transit_station = select_from_collection(route.stations)
+  #     route.delete_transit_station(transit_station)
+  #   end
+  # end
+
+  def add_route_station
+    puts "Выберите маршрут из списка, указав индекс"
+    show_collection(@routes)
+    route = select_from_collection(@routes)
+    puts "Выберите следующую транзитную станцию:"
+    show_collection(@stations)
+    transit_station = select_from_collection(@stations)
+    route.add_transit_station(transit_station)
+  end
+
+  def delete_route_station
+    puts "Выберите маршрут из списка, указав индекс"
+    show_collection(@routes)
+    route = select_from_collection(@routes)
+    puts "Выберите транзитную станцию для удаления:"
+    show_collection(route.stations)
+    transit_station = select_from_collection(route.stations)
+    route.delete_transit_station(transit_station)
   end
 
   def assign_route
@@ -142,6 +171,8 @@ class Main
     show_collection(@stations)
     puts "Список поездов:"
     show_collection(@trains)
+    puts "Список маршрутов"
+    show_collection(@routes)
   end
 
   def show_collection(collection)
@@ -178,7 +209,9 @@ class Main
 
       when 8 then show_assets
 
-      when 9 then route_manager
+      when 9 then add_route_station
+
+      when 10 then delete_route_station
 
       when 0 then break
       end
