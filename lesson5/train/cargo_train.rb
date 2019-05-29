@@ -1,3 +1,6 @@
+require_relative '../instance_counter'
+require_relative '../manufacturer'
+
 class CargoTrain < Train
   def initialize(number)
     @type = "Cargo"

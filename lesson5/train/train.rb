@@ -1,3 +1,6 @@
+require_relative '../instance_counter'
+require_relative '../manufacturer'
+
 class Train
   attr_accessor :carriages
   attr_reader :route, :speed, :type, :number

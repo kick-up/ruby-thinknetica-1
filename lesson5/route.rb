@@ -1,9 +1,10 @@
+require_relative '../instance_counter'
 
 class Route
   attr_reader :origin, :transit_stations, :destination, :stations
 
   include InstanceCounter
-  
+
   def initialize(origin, destination)
     @origin = origin
     @destination = destination

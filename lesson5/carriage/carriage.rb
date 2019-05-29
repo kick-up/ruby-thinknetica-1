@@ -1,3 +1,6 @@
+require_relative '../instance_counter'
+require_relative '../manufacturer'
+
 class Carriage
   attr_reader :type, :number
 
