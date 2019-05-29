@@ -2,10 +2,12 @@ class Carriage
   attr_reader :type, :number
 
   include Manufacturer
+  include InstanceCounter
 
   def initialize(number)
     @type = type
     @number = number
+    register_instance
   end
 
   def to_s

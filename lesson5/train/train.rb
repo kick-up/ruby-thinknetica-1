@@ -1,9 +1,9 @@
-
 class Train
   attr_accessor :carriages
   attr_reader :route, :speed, :type, :number
 
   include Manufacturer
+  include InstanceCounter
 
   @@trains = {}
 
@@ -23,6 +23,7 @@ class Train
     @current_station_index = 0
     @route = []
     @@trains[number] = self # номер => созданный объект
+    register_instance
   end
 
   def increase_speed(n)

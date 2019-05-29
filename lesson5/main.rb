@@ -1,7 +1,7 @@
-require_relative("route")
-require_relative("station")
 require_relative("manufacturer")
 require_relative("instance_counter")
+require_relative("route")
+require_relative("station")
 require "./carriage/carriage"
 require "./carriage/cargo_carriage"
 require "./carriage/passenger_carriage"
@@ -13,14 +13,14 @@ class Main
 
   include Manufacturer
 
+  TRAIN_TYPES = [PassengerTrain, CargoTrain]
+
   def initialize
     @stations = []
     @trains = []
     @routes = []
     @carriages = []
   end
-
-  TRAIN_TYPES = [PassengerTrain, CargoTrain]
 
   def print_state
     system("clear")
@@ -34,7 +34,7 @@ class Main
     puts "Панель управления железно-дорожной станцией. Выберите действие указав соответсвующий номер:"
     puts "1. Создать станцию"
     puts "2. Создать поезд"
-    puts "3. Создание маршрута маршрутами"
+    puts "3. Создание маршрута"
     puts "4. Назначение маршрута поезду"
     puts "5. Прицепить вагон"
     puts "6. Отцепить вагон"
@@ -156,6 +156,15 @@ class Main
     end
   end
 
+  def assign_manufacturer(item, object)
+    puts "Чтобы указать компанию-производителя, укажите индекс #{item}"
+    show_collection(object)
+    object = select_from_collection(object)
+    puts "Укажите название компании-производителя"
+    object.manufacturer = gets.chomp.to_s
+    p object
+  end
+
   def show_assets
     puts "Список станций:"
     show_collection(@stations)
@@ -165,6 +174,11 @@ class Main
     show_collection(@routes)
     puts "Список вагонов"
     show_collection(@carriages)
+
+    @stations.each do |station|
+      puts "Поезда на станции #{station}:"
+      show_collection(station.trains)
+    end
   end
 
   def show_collection(collection)
@@ -186,29 +200,17 @@ class Main
       choice = gets.to_i
       case choice
       when 1 then create_station
-
       when 2 then create_train
-
       when 3 then create_route
-
       when 4 then assign_route
-
       when 5 then attach_carriage_controller
-
       when 6 then detach_carriage_controller
-
       when 7 then train_controller
-
       when 8 then show_assets
-
       when 9 then add_route_station
-
       when 10 then delete_route_station
-
       when 11 then assign_manufacturer("поезда", @trains)
-
       when 12 then assign_manufacturer("вагона", @carriages)
-
       when 0 then break
       end
     end
@@ -217,3 +219,15 @@ end
 
 new_session = Main.new
 new_session.run
+
+# almaty = Station.new("almaty")
+# train1 = Train.new("234234")
+# train2 = PassengerTrain.new("989988")
+# train2 = PassengerTrain.new("345345")
+# train2 = CargoTrain.new("989988")
+# car1 = PassengerCarriage.new("2232")
+
+# p Station.instances
+# p Train.instances
+# p PassengerTrain.instances
+# p PassengerCarriage.instances

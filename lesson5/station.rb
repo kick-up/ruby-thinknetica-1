@@ -1,11 +1,7 @@
-require_relative("instance_counter")
-
 class Station
   attr_reader :name, :trains
 
   include InstanceCounter
-
-  @@instances = 0
 
   @@stations = []
 
@@ -38,6 +34,3 @@ class Station
     name
   end
 end
-
-# almaty = Station.new("almaty")
-# p Station.instances
