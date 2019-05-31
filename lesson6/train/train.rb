@@ -7,9 +7,9 @@ class Train
   attr_reader :route, :speed, :type, :number
 
   NUMBER_FORMAT = /^[a-z\d]{3}-?[a-z\d]{2}$/i
-  INVALID_NUMBER = "Неверный формат. Допустимый формат: три буквы латинские буквы\
-  или цифры в любом порядке необязательный дефис (может быть, а может нет) и еще 2\
-  буквы латинские буквы или цифры после дефиса."
+  INVALID_NUMBER = "Неверный формат. Допустимый формат: три буквы латинские буквы "\
+  "или цифры в любом порядке необязательный дефис (может быть, а может нет) "\
+  "и еще 2 буквы латинские буквы или цифры после дефиса."
 
   include Manufacturer
   include InstanceCounter
@@ -102,6 +102,5 @@ class Train
 
   def validate!
     raise  INVALID_NUMBER if number !~ NUMBER_FORMAT
-    # true
   end
 end

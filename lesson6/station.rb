@@ -5,6 +5,9 @@ class Station
   attr_reader :name, :trains
 
   NAME_FORMAT = /\w/
+  NAME_NIL = "Название станции не может быть пустым значением!"
+  INVALID_LENGTH = "Наименование станции должно иметь хотя бы два символа"
+  INVALID_NAME = "Неверный формат. Используйте любые латинские буквы, цифры и символы - и _"
 
   include InstanceCounter
   include Valid
@@ -44,9 +47,8 @@ class Station
   protected
 
   def validate!
-    raise "Название станции не может быть пустым значением!" if @name.nil?
-    raise "Наименование станции должно иметь хотя бы два символа" if @name.length < 2
-    raise "Неверный формат. Используйте любые латинские буквы, цифры и символы - и _" if @name !~ NAME_FORMAT
-    true
+    raise  NAME_NIL if @name.nil?
+    raise INVALID_LENGTH if @name.length < 2
+    raise INVALID_NAME if @name !~ NAME_FORMAT
   end
 end

@@ -48,9 +48,14 @@ class Main
 
   def create_station
     puts "Введите название станции:"
-    new_station = gets.chomp
-    @stations << Station.new(new_station)
-    puts "Вы добавили станцию #{new_station}"
+    begin
+      new_station = gets.chomp
+      @stations << Station.new(new_station)
+      puts "Вы добавили станцию #{new_station}"
+    rescue => e
+      p e.message
+      retry
+    end
   end
 
   def create_train
@@ -74,12 +79,13 @@ class Main
     
     puts "Укажите конечную станцию, выбрав из списка"
     show_collection(@stations)
-    destination_station = select_from_collection(@stations)
-   
-    # return if origin_station.nil? || destination_station.nil?
-    # return if origin_station == destination_station
-    
-    @routes << Route.new(origin_station, destination_station)
+    begin
+      destination_station = select_from_collection(@stations)
+      @routes << Route.new(origin_station, destination_station)
+    rescue => e
+      p e.message
+      retry
+    end
   end
 
   def add_route_station
@@ -223,15 +229,3 @@ end
 
 new_session = Main.new
 new_session.run
-
-# almaty = Station.new("almaty")
-# train1 = Train.new("234234")
-# train2 = PassengerTrain.new("989988")
-# train2 = PassengerTrain.new("345345")
-# train2 = CargoTrain.new("989988")
-# car1 = PassengerCarriage.new("2232")
-
-# p Station.instances
-# p Train.instances
-# p PassengerTrain.instances
-# p PassengerCarriage.instances

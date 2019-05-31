@@ -4,6 +4,9 @@ require_relative './valid'
 class Route
   attr_reader :origin, :transit_stations, :destination, :stations
 
+  OBJECT_NIL = "Маршрут должен иметь начальную или конечную станцию"
+  DOUBLE_APPEARANCE = "Станция не может быть конечной и начальной одновременно"
+
   include InstanceCounter
   include Valid
 
@@ -33,8 +36,7 @@ class Route
   protected
 
   def validate!
-    raise "Маршрут должен иметь начальную или конечную станцию" if origin.nil? || destination.nil?
-    raise "Станция не может быть конечной и начальной одновременно" if origin == destination
-    true
+    raise OBJECT_NIL if origin.nil? || destination.nil?
+    raise DOUBLE_APPEARANCE if origin == destination
   end
 end

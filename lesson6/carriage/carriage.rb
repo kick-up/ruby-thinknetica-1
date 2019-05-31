@@ -6,6 +6,10 @@ class Carriage
   attr_reader :type, :number
 
   NUMBER_FORMAT = /\w/
+  NUMBER_NIL = "Номер вагона не может быть пустым значением!"
+  EMPTY_STRING = "Номер вагона должен содержать хотя бы один символ"
+  INVALID_NUMBER = "Неверный формат. Используйте любые латинские буквы, цифры и символы - и _"
+
 
   include Manufacturer
   include InstanceCounter
@@ -25,9 +29,8 @@ class Carriage
   protected
 
   def validate!
-    raise "Номер вагона не может быть пустым значением!" if @number.nil?
-    raise "Номер вагона должен содержать хотя бы один символ" if @number.length < 1
-    raise "Неверный формат. Используйте любые латинские буквы, цифры и символы - и _" if @number !~ NUMBER_FORMAT
-    true
+    raise NUMBER_NIL if @number.nil?
+    raise EMPTY_STRING if @number.length < 1
+    raise INVALID_NUMBER if @number !~ NUMBER_FORMAT
   end
 end
