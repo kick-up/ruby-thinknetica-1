@@ -7,8 +7,9 @@ class Train
   attr_reader :route, :speed, :type, :number
 
   NUMBER_FORMAT = /^[a-z\d]{3}-?[a-z\d]{2}$/i
-  # /^([a-zA-Z]|\d){3}-*([a-zA-Z]|\d){2}$/
-  RAISE_MESSAGE = "Неверный формат. Допустимый формат: три буквы латинские буквы или цифры в любом порядке, необязательный дефис (может быть, а может нет) и еще 2 буквы латинские буквы или цифры после дефиса."
+  INVALID_NUMBER = "Неверный формат. Допустимый формат: три буквы латинские буквы\
+  или цифры в любом порядке необязательный дефис (может быть, а может нет) и еще 2\
+  буквы латинские буквы или цифры после дефиса."
 
   include Manufacturer
   include InstanceCounter
@@ -25,7 +26,6 @@ class Train
   end
 
   def initialize(number)
-    validate!
     @number = number
     @carriages = []
     @speed = 0
@@ -33,6 +33,7 @@ class Train
     @route = []
     @@trains[number] = self # номер => созданный объект
     register_instance
+    validate!
   end
 
   def increase_speed(n)
@@ -100,7 +101,7 @@ class Train
   protected
 
   def validate!
-    raise  RAISE_MESSAGE if number !~ NUMBER_FORMAT
+    raise  INVALID_NUMBER if number !~ NUMBER_FORMAT
     # true
   end
 end
