@@ -1,5 +1,5 @@
 module Valid
-   def valid?
+  def valid?
     validate!
   rescue
     false

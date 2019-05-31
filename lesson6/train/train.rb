@@ -8,8 +8,8 @@ class Train
 
   NUMBER_FORMAT = /^[a-z\d]{3}-?[a-z\d]{2}$/i
   INVALID_NUMBER = "Неверный формат. Допустимый формат: три буквы латинские буквы "\
-  "или цифры в любом порядке необязательный дефис (может быть, а может нет) "\
-  "и еще 2 буквы латинские буквы или цифры после дефиса."
+    "или цифры в любом порядке необязательный дефис (может быть, а может нет) "\
+    "и еще 2 буквы латинские буквы или цифры после дефиса."
 
   include Manufacturer
   include InstanceCounter
@@ -31,9 +31,10 @@ class Train
     @speed = 0
     @current_station_index = 0
     @route = []
+    validate!
     @@trains[number] = self # номер => созданный объект
     register_instance
-    validate!
+    
   end
 
   def increase_speed(n)
@@ -101,6 +102,6 @@ class Train
   protected
 
   def validate!
-    raise  INVALID_NUMBER if number !~ NUMBER_FORMAT
+    raise INVALID_NUMBER if number !~ NUMBER_FORMAT
   end
 end

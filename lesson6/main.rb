@@ -53,7 +53,7 @@ class Main
       @stations << Station.new(new_station)
       puts "Вы добавили станцию #{new_station}"
     rescue => e
-      p e.message
+      puts e.message
       retry
     end
   end
@@ -64,10 +64,10 @@ class Main
     return if train_type.nil?
     puts "Укажите номер поезда:"
     begin
-      p train_number = gets.chomp
+      train_number = gets.chomp
       @trains << train_type.new(train_number)
     rescue => e
-      p e.message
+      puts e.message
       retry
     end
   end
@@ -79,13 +79,11 @@ class Main
     
     puts "Укажите конечную станцию, выбрав из списка"
     show_collection(@stations)
-    begin
-      destination_station = select_from_collection(@stations)
-      @routes << Route.new(origin_station, destination_station)
-    rescue => e
-      p e.message
-      retry
-    end
+    destination_station = select_from_collection(@stations)
+    @routes << Route.new(origin_station, destination_station)
+  rescue => e
+    puts e.message
+    retry
   end
 
   def add_route_station
