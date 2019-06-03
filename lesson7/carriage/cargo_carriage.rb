@@ -9,7 +9,7 @@ class CargoCarriage < Carriage
   end
 
   def to_s
-    volume_info = "Доступный объем: #{available_volume}", "Объем загрузки: #{volume_reserved}"
+    volume_info = "Доступный объем: #{available_volume}", "Объем загрузки: #{reserved_volume}"
     [number, type, manufacturer, volume_info].join(" - ")
   end
 end

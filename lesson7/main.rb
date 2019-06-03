@@ -214,15 +214,19 @@ class Main
     puts "Выберите вагон:"
     show_collection(train.carriages)
     carriage = select_from_collection(train.carriages)
-    case train.type
-    when "Cargo"
-      puts "Укажите объем погрузки:"
-      volume = gets.to_i
-      carriage.take_space(volume)
-    when "Passenger"
-      puts "Было занято одно место."
-      carriage.take_space
-      carriage.volume
+    begin
+      case train.type
+      when "Cargo"
+        puts "Укажите объем погрузки:"
+        volume = gets.to_i
+        carriage.take_space(volume)
+      when "Passenger"
+        puts "Было занято одно место."
+        carriage.take_space
+        carriage.volume
+      end
+    rescue => e
+      puts e.message
     end
   end
 

@@ -4,10 +4,11 @@ require_relative '../valid'
 
 class Carriage
   attr_accessor :volume
-  attr_reader :type, :number
+  attr_reader :type, :number, :reserved_volume
 
   NUMBER_FORMAT = /^[\w]{2,}$/
   INVALID_NUMBER = "Неверный формат. Используйте любые 2 латинские буквы, цифры и символы - и _"
+  NOT_ENOUGH_VOLUME = "Поезд перегружен"
 
 
   include Manufacturer
@@ -18,7 +19,7 @@ class Carriage
     @type = type
     @number = number
     @volume = volume
-    @volume_reserved = 0
+    @reserved_volume = 0
     validate!
     register_instance
   end
@@ -27,18 +28,13 @@ class Carriage
     [number, type, manufacturer].join(" - ")
   end
 
-  def take_space(volume=1)
-    return if @volume.zero? || volume > @volume
-    @volume -= volume
-    @volume_reserved += volume
+  def take_space(volume)
+    raise NOT_ENOUGH_VOLUME if volume > available_volume
+    @reserved_volume += volume
   end
 
   def available_volume
-    @volume
-  end
-
-  def volume_reserved
-    @volume_reserved
+    @volume - @reserved_volume
   end
 
   protected
