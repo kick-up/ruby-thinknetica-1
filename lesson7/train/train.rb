@@ -95,9 +95,9 @@ class Train
     current_station.train_in(self)
   end
 
-  def each_carriage(&block)
+  def each_carriage
     carriages.each do |carriage|
-      block.call(carriage)
+      yield carriage
     end
   end
 

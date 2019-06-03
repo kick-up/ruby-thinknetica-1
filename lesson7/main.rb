@@ -218,10 +218,11 @@ class Main
     when "Cargo"
       puts "Укажите объем погрузки:"
       volume = gets.to_i
-      carriage.load_cargo(volume)
+      carriage.take_space(volume)
     when "Passenger"
       puts "Было занято одно место."
-      carriage.reserve_seat
+      carriage.take_space
+      carriage.volume
     end
   end
 

@@ -18,12 +18,27 @@ class Carriage
     @type = type
     @number = number
     @volume = volume
+    @volume_reserved = 0
     validate!
     register_instance
   end
 
   def to_s
     [number, type, manufacturer].join(" - ")
+  end
+
+  def take_space(volume=1)
+    return if @volume.zero? || volume > @volume
+    @volume -= volume
+    @volume_reserved += volume
+  end
+
+  def available_volume
+    @volume
+  end
+
+  def volume_reserved
+    @volume_reserved
   end
 
   protected
