@@ -11,8 +11,8 @@ class PassengerCarriage < Carriage
     super
   end
 
-  def take_space(volume=1)
-    raise ONE_PER_REQUEST if volume > 1
+  def take_space(volume = 1)
+    raise ONE_PER_REQUEST if volume != 1
     super
   end
 
