@@ -10,7 +10,7 @@ class Carriage
   attr_accessor :volume
   attr_reader :type, :number, :reserved_volume
 
-  NUMBER_FORMAT = /^[\w]{2,}$/.freeze
+  NUMBER_FORMAT = /^[\w]{2,}$/
   INVALID_NUMBER = 'Неверный формат. Используйте любые 2 латинские '\
     'буквы, цифры и символы - и _'
   NOT_ENOUGH_VOLUME = 'Поезд перегружен'

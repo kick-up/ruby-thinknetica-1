@@ -132,19 +132,25 @@ class Main
     puts 'Укажите номер вагона'
     number = gets.chomp.to_s
     case carriage
-    when 1
-      puts 'Укажите количество посадочных мест в вагоне:'
-      seats = gets.to_i
-      carriage = PassengerCarriage.new(number, seats)
-      train.attach_carriage(carriage)
-      @carriages << carriage
-    when 2
-      puts 'Укажите объем вагона(квадратных метров):'
-      volume = gets.to_i
-      carriage = CargoCarriage.new(number, volume)
-      train.attach_carriage(carriage)
-      @carriages << carriage
+    when 1 then attach_passenger_carriage(train, number)
+    when 2 then attach_cargo_carriage(train, number)
     end
+  end
+
+  def attach_cargo_carriage(train, number)
+    puts 'Укажите объем вагона(квадратных метров):'
+    volume = gets.to_i
+    carriage = CargoCarriage.new(number, volume)
+    train.attach_carriage(carriage)
+    @carriages << carriage
+  end
+
+  def attach_passenger_carriage(train, number)
+    puts 'Укажите количество посадочных мест в вагоне:'
+    seats = gets.to_i
+    carriage = PassengerCarriage.new(number, seats)
+    train.attach_carriage(carriage)
+    @carriages << carriage
   end
 
   def detach_carriage_controller
@@ -164,13 +170,10 @@ class Main
     puts 'Выберите направление движения: 1 - вперед, 2 - назад'
     direction = gets.to_i
     case direction
-    when 1
-      train.move_forward
-      puts "Текущая станция: #{train.current_station}"
-    when 2
-      train.move_backward
-      puts "Текущая станция: #{train.current_station}"
+    when 1 then train.move_forward
+    when 2 then train.move_backward
     end
+    puts "Текущая станция: #{train.current_station}"
   end
 
   def assign_manufacturer(item, object)

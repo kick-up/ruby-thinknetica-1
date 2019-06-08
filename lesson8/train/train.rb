@@ -9,7 +9,7 @@ class Train
   attr_accessor :carriages
   attr_reader :route, :speed, :type, :number
 
-  NUMBER_FORMAT = /^[a-z\d]{3}-?[a-z\d]{2}$/i.freeze
+  NUMBER_FORMAT = /^[a-z\d]{3}-?[a-z\d]{2}$/i
   INVALID_NUMBER = 'Неверный формат. Допустимый формат: три буквы '\
     'латинские буквы или цифры в любом порядке необязательный дефис '\
     '(может быть, а может нет) и еще 2 буквы латинские буквы или цифры '\

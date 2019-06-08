@@ -10,7 +10,7 @@ require_relative './train/passenger_train'
 class Station
   attr_reader :name, :trains
 
-  NAME_FORMAT = /^[\w]{2,}$/.freeze
+  NAME_FORMAT = /^[\w]{2,}$/
   INVALID_NAME = 'Неверный формат. Используйте любые 2 латинские буквы,'\
     'цифры и символы - и _'
 
