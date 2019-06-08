@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../instance_counter'
 require_relative '../manufacturer'
 require_relative '../valid'
@@ -6,10 +8,11 @@ class Train
   attr_accessor :carriages
   attr_reader :route, :speed, :type, :number
 
-  NUMBER_FORMAT = /^[a-z\d]{3}-?[a-z\d]{2}$/i
-  INVALID_NUMBER = "Неверный формат. Допустимый формат: три буквы латинские буквы "\
-    "или цифры в любом порядке необязательный дефис (может быть, а может нет) "\
-    "и еще 2 буквы латинские буквы или цифры после дефиса."
+  NUMBER_FORMAT = /^[a-z\d]{3}-?[a-z\d]{2}$/i.freeze
+  INVALID_NUMBER = 'Неверный формат. Допустимый формат: три буквы '\
+    'латинские буквы или цифры в любом порядке необязательный дефис '\
+    '(может быть, а может нет) и еще 2 буквы латинские буквы или цифры '\
+    'после дефиса.'
 
   include Manufacturer
   include InstanceCounter
@@ -18,11 +21,11 @@ class Train
   @@trains = {}
 
   def self.trains
-    @@trains # выводим хеш
+    @@trains
   end
 
   def self.find(number)
-    @@trains[number] # выводим значение ключа
+    @@trains[number]
   end
 
   def initialize(number)
@@ -32,18 +35,17 @@ class Train
     @current_station_index = 0
     @route = []
     validate!
-    @@trains[number] = self # номер => созданный объект
+    @@trains[number] = self
     register_instance
-    
   end
 
-  def increase_speed(n)
-    @speed += n
+  def increase_speed(speed)
+    @speed += speed
   end
 
-  def decrease_speed(n)
-    @speed -= n
-    @speed = 0 if @speed < 0
+  def decrease_speed(speed)
+    @speed -= speed
+    @speed = 0 if @speed.negative?
   end
 
   def attach_carriage(carriage)
@@ -53,7 +55,7 @@ class Train
     @carriages << carriage
   end
 
-  def detach_carriage(carriage)
+  def detach_carriage(_carriage)
     return unless @speed.zero?
 
     @carriages.delete_at(-1)
@@ -102,7 +104,8 @@ class Train
   end
 
   def to_s
-    [number, type, manufacturer, "Количество вагонов: #{carriages.count}"].join(" - ")
+    train_count = "Количество вагонов: #{carriages.count}"
+    [number, type, manufacturer, train_count].join(' - ')
   end
 
   protected

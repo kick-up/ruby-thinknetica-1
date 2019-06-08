@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative './instance_counter'
 require_relative './valid'
 require_relative './train/train'
@@ -7,8 +9,8 @@ require_relative './train/passenger_train'
 class Station
   attr_reader :name, :trains
 
-  NAME_FORMAT = /^[\w]{2,}$/
-  INVALID_NAME = "Неверный формат. Используйте любые 2 латинские буквы, цифры и символы - и _"
+  NAME_FORMAT = /^[\w]{2,}$/.freeze
+  INVALID_NAME = 'Неверный формат. Используйте любые 2 латинские буквы, цифры и символы - и _'
 
   include InstanceCounter
   include Valid

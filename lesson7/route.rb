@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require_relative './instance_counter'
 require_relative './valid'
 
 class Route
   attr_reader :origin, :transit_stations, :destination, :stations
 
-  OBJECT_NIL = "Маршрут должен иметь начальную или конечную станцию"
-  DOUBLE_APPEARANCE = "Станция не может быть конечной и начальной одновременно"
+  OBJECT_NIL = 'Маршрут должен иметь начальную или конечную станцию'
+  DOUBLE_APPEARANCE = 'Станция не может быть конечной и начальной одновременно'
 
   include InstanceCounter
   include Valid
@@ -30,7 +32,7 @@ class Route
   end
 
   def to_s
-    [stations.first, *[@transit_stations], stations.last].join(' - ')
+    [stations.first, @transit_stations, stations.last].join(' - ')
   end
 
   protected

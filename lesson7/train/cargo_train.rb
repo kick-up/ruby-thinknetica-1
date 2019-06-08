@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require_relative '../instance_counter'
 require_relative '../manufacturer'
 
 class CargoTrain < Train
   def initialize(number)
-    @type = "Cargo"
+    @type = 'Cargo'
     super
   end
 
