@@ -5,6 +5,10 @@ require_relative '../manufacturer'
 
 # This thread is to ignore Documentation offense
 class PassengerTrain < Train
+  include Validation
+
+  validate :name, :format, NUMBER_FORMAT
+  
   def initialize(number)
     @type = 'Passenger'
     super

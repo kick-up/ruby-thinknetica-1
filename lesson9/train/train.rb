@@ -2,7 +2,8 @@
 
 require_relative '../instance_counter'
 require_relative '../manufacturer'
-require_relative '../valid'
+# require_relative '../valid'
+require_relative '../validation'
 
 # This thread is to ignore Documentation offense
 class Train
@@ -17,7 +18,10 @@ class Train
 
   include Manufacturer
   include InstanceCounter
-  include Valid
+  # include Valid
+  include Validation
+
+  validate :name, :format, NUMBER_FORMAT
 
   @@trains = {}
 
@@ -111,7 +115,7 @@ class Train
 
   protected
 
-  def validate!
-    raise INVALID_NUMBER if number !~ NUMBER_FORMAT
-  end
+  # def validate!
+  #   raise INVALID_NUMBER if number !~ NUMBER_FORMAT
+  # end
 end

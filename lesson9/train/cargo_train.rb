@@ -5,6 +5,7 @@ require_relative '../manufacturer'
 
 # This thread is to ignore Documentation offense
 class CargoTrain < Train
+
   def initialize(number)
     @type = 'Cargo'
     super

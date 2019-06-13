@@ -29,13 +29,12 @@ module Accessors
       define_method(attribute) { instance_variable_get(history_var_name) }
 
       define_method("#{attribute}=".so_sym) do |value|
-        if history_var_name.nil?
-          history_var_name << []
+        if instance_variable_get(history_var_name).nil?
+          instance_variable_set(history_var_name, [])
         else
-          var_history << value
+          instance_variable_set(history_var_name, value)
         end
         instance_variable_set(var_name, value)
-        instance_variable_set(history_var_name, var_history)
       end
     end
   end
