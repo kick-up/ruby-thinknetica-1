@@ -33,6 +33,8 @@ module Accessors
           instance_variable_set(history_var_name, [])
         else
           instance_variable_set(history_var_name, value)
+          old_value = instance_variable_get(var_name)
+          instance_variable_get(history_var_name) << old_value
         end
         instance_variable_set(var_name, value)
       end
@@ -40,7 +42,7 @@ module Accessors
   end
 
   def strong_attr_accessor(attribute, klass)
-    attribute.each do |attribute|
+    # attribute.each do |attribute|
       var_name = "@#{attribute}".to_sym
 
       define_method(attribute) { instance_variable_get(var_name) }
@@ -49,6 +51,9 @@ module Accessors
         raise "Wrong type" unless value.is_a?(klass)
         instance_variable_set(var_name, value)
       end
-    end
+    # end
   end
 end
+
+
+

@@ -7,6 +7,11 @@ require_relative '../validation'
 
 # This thread is to ignore Documentation offense
 class Train
+  include Manufacturer
+  include InstanceCounter
+  # include Valid
+  include Validation
+
   attr_accessor :carriages
   attr_reader :route, :speed, :type, :number
 
@@ -16,12 +21,7 @@ class Train
     '(может быть, а может нет) и еще 2 буквы латинские буквы или цифры '\
     'после дефиса.'
 
-  include Manufacturer
-  include InstanceCounter
-  # include Valid
-  include Validation
-
-  validate :name, :format, NUMBER_FORMAT
+  validate :number, :format, NUMBER_FORMAT
 
   @@trains = {}
 
@@ -113,7 +113,7 @@ class Train
     [number, type, manufacturer, train_count].join(' - ')
   end
 
-  protected
+  # protected
 
   # def validate!
   #   raise INVALID_NUMBER if number !~ NUMBER_FORMAT
