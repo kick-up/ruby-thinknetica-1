@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require_relative '../instance_counter'
 require_relative '../manufacturer'
 # require_relative '../valid'
@@ -9,7 +8,6 @@ require_relative '../validation'
 class Train
   include Manufacturer
   include InstanceCounter
-  # include Valid
   include Validation
 
   attr_accessor :carriages

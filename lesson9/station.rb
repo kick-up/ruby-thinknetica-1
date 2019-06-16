@@ -1,7 +1,6 @@
 # frozen_string_literal: true
-
 require_relative './instance_counter'
-require_relative './valid'
+require_relative './validation'
 require_relative './train/train'
 require_relative './train/cargo_train'
 require_relative './train/passenger_train'
@@ -15,7 +14,10 @@ class Station
     'цифры и символы - и _'
 
   include InstanceCounter
-  include Valid
+  include Validation
+
+  validate :name, :presence
+  validate :name, :format, NAME_FORMAT
 
   @@stations = []
 
@@ -54,10 +56,7 @@ class Station
   def to_s
     name
   end
-
-  protected
-
-  def validate!
-    raise INVALID_NAME if @name !~ NAME_FORMAT
-  end
 end
+
+# station = Station.new('Slava')
+# p station.valid?
