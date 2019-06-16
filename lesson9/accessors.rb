@@ -30,8 +30,3 @@ module Accessors
     end
   end
 end
-
-
-instance_variable_set(history_var_name, value)
-old_value = instance_variable_get(var_name)
-instance_variable_get(history_var_name) << old_value

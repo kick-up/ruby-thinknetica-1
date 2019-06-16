@@ -12,7 +12,6 @@ class Station
 
   include InstanceCounter
   include Validation
-  include Accessors
   extend Accessors
 
   attr_reader :trains
